@@ -7,16 +7,14 @@ const createUser = async (name, birth, height, phone) => {
     WHERE phone = ?
   `, [phone])
 
-  if (user) {
-    return user
+  if (!user){
+    await myDataSource.query(`
+      INSERT INTO users (name, birth, height, phone)
+      VALUE (?, ?, ?, ?)
+    `,[name, birth, height, phone])
   }
 
-  await myDataSource.query(`
-    INSERT INTO users (name, birth, height, phone)
-    VALUE (?, ?, ?, ?)
-  `,[name, birth, height, phone])
-
-  return;
+  return user;
 };
 
 module.exports = {

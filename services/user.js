@@ -40,7 +40,12 @@ const createUser = async (name, birth, height, phone) => {
   return ;
 };
 
+const getUsers = async () => {
+  const users = await userDao.getUsers()
+  return users
+}
+
 module.exports = {
-  createUser,
+  createUser, getUsers
 };
 

@@ -11,7 +11,7 @@ const createUser = async (name, birth, height, phone) => {
   
   const birth_regex = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
    if (!birth_regex.test(birth)) {
-    const error = new Error('invalid email')
+    const error = new Error('invalid birth data')
     error.statusCode = 400
     throw error
    }

@@ -1,7 +1,6 @@
 const userDao = require("../models/user");
 
-const createUser = async (name, birth, height, phone) => {
-
+const checkUserInput = async (name, birth, height, phone) => {
   const name_regex = /^[가-힣a-zA-Z]+$/;
   if (!name_regex.test(name)) {
     const error = new Error('invalid name')
@@ -30,17 +29,22 @@ const createUser = async (name, birth, height, phone) => {
      throw error
    }
 
-  const user = await userDao.createUser(name, birth, height, phone)
+   return;
+}
+
+const createUser = async (name, birth, height, phone) => {
+  const user = await userDao.getUserByPhone(phone)
   if (user) {
     const error = new Error('user already exists')
     error.statusCode = 400
     throw error
   }
+  await userDao.createUser(name, birth, height, phone)
 
   return ;
 };
 
 module.exports = {
-  createUser,
+  checkUserInput, createUser,
 };
 

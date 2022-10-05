@@ -1,22 +1,22 @@
 const { myDataSource } = require("./typeorm-client");
 
-const createUser = async (name, birth, height, phone) => {
+const getUserByPhone =  async (phone) => {
   const [user] = await myDataSource.query(`
-    SELECT * 
-    FROM users 
+    SELECT * FROM users 
     WHERE phone = ?
   `, [phone])
-
-  if (!user){
-    await myDataSource.query(`
-      INSERT INTO users (name, birth, height, phone)
-      VALUE (?, ?, ?, ?)
-    `,[name, birth, height, phone])
-  }
-
   return user;
+}
+
+const createUser = async (name, birth, height, phone) => {
+  await myDataSource.query(`
+    INSERT INTO users (name, birth, height, phone)
+    VALUE (?, ?, ?, ?)
+  `,[name, birth, height, phone])
+  return;
 };
 
+
 module.exports = {
-  createUser,
+  getUserByPhone, createUser,
 };
